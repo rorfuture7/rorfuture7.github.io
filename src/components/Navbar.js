@@ -79,13 +79,15 @@ export default function Navbar({title}) {
 	              </Link>
 	            </li>
             	) : (
-            		<a
-							    href="#"
-							    className="nav-link"
-							    onClick={handleLogout}
-							  >
-							  	Logout
-  							</a>
+            		<li className="nav-item">
+	            		<a
+								    href="#"
+								    className="nav-link"
+								    onClick={handleLogout}
+								  >
+								  	Logout
+	  							</a>
+	  						</li>
             	)}
           </ul>
 
@@ -103,10 +105,3 @@ export default function Navbar({title}) {
 Navbar.propTypes = {
   title: PropTypes.string.isRequired,
 };
-
-Navbar.defaultProps = {
-  title: 'Stranger',
-  aboutText: 'About',
-};
-
-
