@@ -27,7 +27,13 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    clearState: (state) => {
+      state.user = null;
+      state.token = '';
+      state.message = '';
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
@@ -49,12 +55,12 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(logout.fulfilled, (state, action) => {
-        state.user = null;
-        state.token = '';
+        // state.user = null;
+        // state.token = '';
         state.message = "Signed out successfully.";
-        localStorage.removeItem('login_user');
+        // localStorage.removeItem('login_user');
       });
   },
 });
-
+export const { clearState } = authSlice.actions;
 export default authSlice.reducer;

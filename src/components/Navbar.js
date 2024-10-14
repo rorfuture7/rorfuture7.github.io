@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../features/auth/authSlice';
+import { logout, clearState } from '../features/auth/authSlice';
 
 export default function Navbar({title}) {
   // const navigate = useNavigate();
@@ -18,7 +18,11 @@ export default function Navbar({title}) {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout()).then(() => {
+      setTimeout(() => {
+        dispatch(clearState());
+      }, 1000);
+    });
   };
 
   // const logOut = () =>{
