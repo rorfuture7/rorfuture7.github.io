@@ -11,7 +11,7 @@ export default function AppRoutes() {
 		<BrowserRouter>
     <Navbar title="TextUtils"/>
       <Routes>
-        <Route exact path="/about" element={<About />} />
+        <Route exact path="/about" element={<PrivateRoute><About /></PrivateRoute>} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route exact path="/" element={<TextForm heading="This is text box" />} />
