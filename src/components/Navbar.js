@@ -1,18 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../features/auth/authSlice';
 
 export default function Navbar({title}) {
   // const navigate = useNavigate();
   // const { user } = useSelector((state) => state.user);
   const location = useLocation();
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   // let user_data = localStorage.getItem('login_user');
   // const user1 = JSON.parse(user_data);
 
   const isActive = (path) => {
     return location.pathname === path;
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   // const logOut = () =>{
@@ -64,13 +70,23 @@ export default function Navbar({title}) {
                 Dashboard
               </Link>
             </li>
-            <li className="nav-item">
-              <Link 
-                className={`nav-link ${isActive('/login') ? 'active' : ''}`}
-                to="/login">
-                Login
-              </Link>
-            </li>
+            { !auth.user ? (
+            	<li className="nav-item">
+	              <Link 
+	                className={`nav-link ${isActive('/login') ? 'active' : ''}`}
+	                to="/login">
+	                Login
+	              </Link>
+	            </li>
+            	) : (
+            		<a
+							    href="#"
+							    className="nav-link"
+							    onClick={handleLogout}
+							  >
+							  	Logout
+  							</a>
+            	)}
           </ul>
 
             { auth.user &&
