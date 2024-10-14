@@ -68,3 +68,24 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+--------------------------------
+export NODE_OPTIONS=--openssl-legacy-provider
+
+node: v18.2.0
+react: v18.2.0
+
+1. npx create-react-app react-app-oct
+2. cd react-app-oct
+3. npm install redux react-redux @reduxjs/toolkit react-router-dom axios
+
+redux: स्टेट मैनेजमेंट के लिए।
+react-redux: React के साथ Redux को जोड़ने के लिए।
+@reduxjs/toolkit: Redux को सेटअप करने के लिए सरल तरीका।
+react-router-dom: राउटिंग के लिए।
+axios: HTTP रिक्वेस्ट के लिए।
+
+
+4. 
