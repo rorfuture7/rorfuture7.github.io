@@ -87,5 +87,86 @@ react-redux: React के साथ Redux को जोड़ने के ल�
 react-router-dom: राउटिंग के लिए।
 axios: HTTP रिक्वेस्ट के लिए।
 
+4. npm i redux-persist  --: is line se persist install hoga, jo browser ko refresh karne per bhi state ko clear nhi karega
+------------
+4.1: Store.js
 
+// import { configureStore } from '@reduxjs/toolkit';
+// import authReducer from './features/auth/authSlice';
+
+// const store = configureStore({
+//   reducer: {
+//     auth: authReducer,
+//   },
+// });
+
+// export default store;
+
+
+import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import authReducer from './features/auth/authSlice';
+
+// const persistedState = localStorage.getItem('authState') 
+//   ? JSON.parse(localStorage.getItem('authState')) 
+//   : {};
+
+// Redux Persist config
+const persistConfig = {
+  key: 'root', // key for storage
+  storage,
+};
+
+// Persisted reducer
+const persistedReducer = persistReducer(persistConfig, authReducer);
+
+const store = configureStore({
+  reducer: {
+    auth: persistedReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST'],
+      },
+    }),
+});
+
+// store.subscribe(() => {
+//   const state = store.getState();
+//   localStorage.setItem('authState', JSON.stringify(state.auth));
+// });
+
+export const persistor = persistStore(store);
+export default store;
+--------------------------------
+4.2: index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react';
+import store, { persistor } from './store';  # isme ye (persistor) store.js se ayega
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}> #isme ye line use karna hai
+        <App />
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>
+);
+
+reportWebVitals();
+
+###  Dock of Persist:
+
+https://blog.logrocket.com/persist-state-redux-persist-redux-toolkit-react/
+--------------------------------------------------
 Backend remote url: https://github.com/rinkukushwah5679/assignmant-api.git
