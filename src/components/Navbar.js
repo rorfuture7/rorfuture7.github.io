@@ -75,6 +75,7 @@ export default function Navbar({title}) {
               </Link>
             </li>
             { !auth.user ? (
+							<>
             	<li className="nav-item">
 	              <Link 
 	                className={`nav-link ${isActive('/login') ? 'active' : ''}`}
@@ -82,6 +83,14 @@ export default function Navbar({title}) {
 	                Login
 	              </Link>
 	            </li>
+	            <li className="nav-item">
+	              <Link
+	                className={`nav-link ${isActive('/sign_up') ? 'active' : ''}`}
+	                to="/sign_up">
+	                Sign Up
+	              </Link>
+	            </li>
+	            </>
             	) : (
             		<li className="nav-item">
 	            		<a

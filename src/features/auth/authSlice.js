@@ -8,6 +8,16 @@ const initialState = {
   user: null,
   message: '',
 };
+// Signup Thunk
+export const signup = createAsyncThunk('auth/signup', async (credentials, thunkAPI) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/users/sign_up`, credentials);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 // Login Thunk
 export const login = createAsyncThunk('auth/login', async (credentials, thunkAPI) => {
     try {
@@ -36,6 +46,29 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(signup.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.errors != null) {
+          state.message = action.payload.errors;
+        } else {
+          state.message = "Registration successfully";
+          state.user = action.payload.data;
+          state.token = action.payload.data.authentication_token
+        }
+      })
+      .addCase(signup.rejected, (state, action) => {
+        state.loading = false;
+        if (action.payload.errors && action.payload.errors !== null) {
+          if (action.payload.errors.email && (action.payload.errors.email !== null)){
+            state.message = "Email " + action.payload.errors.email.join(", ");
+          } else if (action.payload.errors.password && (action.payload.errors.password !== null)){
+            state.message = "Password " + action.payload.errors.password.join(", ");
+          }
+        }
+      })
+      .addCase(signup.pending, (state, action) => {
+        state.loading = true;
+      })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload.errors != null) {
