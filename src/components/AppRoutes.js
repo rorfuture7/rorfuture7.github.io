@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import Navbar from './Navbar';
 import About from './About';
 import Login from './Login';
@@ -10,6 +11,13 @@ import PrivateRoute from './PrivateRoute';
 import FlashMessage from './FlashMessage';
 
 export default function AppRoutes() {
+  const auth = useSelector((state) => state.auth)
+  if (auth.user) {
+    const string = auth.user.email.split("@")[0]
+    document.title = string.charAt(0).toUpperCase() + string.slice(1);
+  } else {
+    document.title = '';
+  }
 	return (
 		<BrowserRouter>
     <Navbar title="TextUtils"/>

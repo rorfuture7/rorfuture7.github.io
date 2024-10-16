@@ -21,7 +21,7 @@ export default function Navbar({title}) {
     dispatch(logout()).then(() => {
       setTimeout(() => {
         dispatch(clearState());
-      }, 1000);
+      }, 2000);
     });
   };
 

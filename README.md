@@ -168,5 +168,34 @@ reportWebVitals();
 ###  Dock of Persist:
 
 https://blog.logrocket.com/persist-state-redux-persist-redux-toolkit-react/
+
+--------------------------------------------------
+Flash message
+
+npm i react-flash-message
+
+import React from 'react';
+import { useSelector } from 'react-redux';
+import FlashMessage2 from 'react-flash-message';
+import "../FlashMessage.css";
+
+const FlashMessage = () => {
+  const message = useSelector((state) => state.auth.message);
+
+  if (!message) return null;
+  const uniqueKey = `${message}-${Date.now()}`;
+
+  return (
+    <FlashMessage2 key={uniqueKey} duration={2000} persistOnHover={true}>
+      <div className='flash-class'>
+        {message}
+      </div>
+    </FlashMessage2>
+  );
+};
+
+export default FlashMessage;
+
+
 --------------------------------------------------
 Backend remote url: https://github.com/rinkukushwah5679/assignmant-api.git

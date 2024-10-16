@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../features/auth/authSlice';
 import { Navigate } from 'react-router-dom';
+// import FlashMessage2 from 'react-flash-message';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,9 @@ const Login = () => {
   return (
     <div className="container my-5">
       <h2>Login</h2>
+      {/*<FlashMessage2 duration={3000} persistOnHover={true}>
+        <p>Message</p>
+      </FlashMessage2>*/}
       {/*
         auth.message &&
         <h5>{auth.message}</h5>

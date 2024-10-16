@@ -1,28 +1,22 @@
 // src/components/FlashMessage.js
 import React from 'react';
 import { useSelector } from 'react-redux';
+import FlashMessage2 from 'react-flash-message';
+import "../FlashMessage.css";
 
 const FlashMessage = () => {
   const message = useSelector((state) => state.auth.message);
 
   if (!message) return null;
+  const uniqueKey = `${message}-${Date.now()}`;
 
   return (
-    <div style={styles.flashMessage}>
-      {message}
-    </div>
+    <FlashMessage2 key={uniqueKey} duration={2000} persistOnHover={true}>
+      <div className='flash-class'>
+        {message}
+      </div>
+    </FlashMessage2>
   );
-};
-
-const styles = {
-  flashMessage: {
-    padding: '10px',
-    margin: '0px 0',
-    backgroundColor: '#f0ad4e',
-    color: '#fff',
-    textAlign: 'center',
-    borderRadius: '1px',
-  }
 };
 
 export default FlashMessage;
