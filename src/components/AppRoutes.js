@@ -7,10 +7,13 @@ import SignUp from './SignUp';
 import Dashboard from './Dashboard';
 import TextForm from './TextForm';
 import PrivateRoute from './PrivateRoute';
+import FlashMessage from './FlashMessage';
+
 export default function AppRoutes() {
 	return (
 		<BrowserRouter>
     <Navbar title="TextUtils"/>
+      <FlashMessage /> {/* Display flash message */}
       <Routes>
         <Route exact path="/about" element={<PrivateRoute><About /></PrivateRoute>} />
         <Route exact path="/login" element={<Login />} />

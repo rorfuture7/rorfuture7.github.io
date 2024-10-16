@@ -22,10 +22,10 @@ const SignUp = () => {
   return (
     <div className="container my-5">
       <h2>Registration</h2>
-      {
+      {/*
         auth.message &&
         <h5>{auth.message}</h5>
-      }
+      */}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>

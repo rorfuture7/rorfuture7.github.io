@@ -25,10 +25,10 @@ const Login = () => {
   return (
     <div className="container my-5">
       <h2>Login</h2>
-      {
+      {/*
         auth.message &&
         <h5>{auth.message}</h5>
-      }
+      */}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>

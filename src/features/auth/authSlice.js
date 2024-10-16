@@ -39,8 +39,8 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     clearState: (state) => {
-      state.user = null;
-      state.token = '';
+      // state.user = null;
+      // state.token = '';
       state.message = '';
     },
   },
@@ -88,8 +88,8 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(logout.fulfilled, (state, action) => {
-        // state.user = null;
-        // state.token = '';
+        state.user = null;
+        state.token = '';
         state.message = "Signed out successfully.";
         // localStorage.removeItem('login_user');
       });
