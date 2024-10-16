@@ -20,7 +20,7 @@ export default function AppRoutes() {
   }
 	return (
 		<BrowserRouter>
-    <Navbar title="TextUtils"/>
+    <Navbar title="TextUtils" sec= "ss"/>
       <FlashMessage /> {/* Display flash message */}
       <Routes>
         <Route exact path="/about" element={<PrivateRoute><About /></PrivateRoute>} />

@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, clearState } from '../features/auth/authSlice';
 
-export default function Navbar({title}) {
+export default function Navbar({title, sec}) {
   // const navigate = useNavigate();
   // const { user } = useSelector((state) => state.user);
   const location = useLocation();
@@ -35,7 +35,7 @@ export default function Navbar({title}) {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
-          {title}
+          {title} {sec}
         </a>
         <button
           className="navbar-toggler"

@@ -1,33 +1,51 @@
-// src/components/Dashboard.js
-import React from 'react';
-// import { useSelector } from 'react-redux';
-// import { NEWS_API_KEY } from "../config";
-// import { clearState } from '../features/auth/authSlice';
+import React, { useEffect, useState } from 'react';
+import { NEWS_API_KEY } from "../config";
+import axios from 'axios';
+import NewsItems from './NewsItems';
 
+const Dashboard = ({ country = 'us', category = 'general', pageSize = 8, page = 1, setProgress = () => {} }) => {
+  const [articles, setArticles] = useState([]); // State to hold news data
+  const [error, setError] = useState(''); // State to hold any error messages
 
-// import { logout } from '../features/auth/authSlice';
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await axios.get(`https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${NEWS_API_KEY}&page=${page}&pageSize=${pageSize}`);
+        setArticles(response.data.articles); // Store news articles in state
+      } catch (error) {
+        setError('Failed to fetch news'); // Handle any error
+      }
+    };
 
-const Dashboard = () => {
-  // const auth = useSelector((state) => state.auth)
-  // const message = useSelector((state) => state.auth.message);
-  // const dispatch = useDispatch();
-  // console.log(NEWS_API_KEY);
-  // useEffect(() => {
-  //   if (message) {
-  //     const timer = setTimeout(() => {
-  //       dispatch(clearState());
-  //     }, 2000); // Clear the message after 2 seconds
-  //     return () => clearTimeout(timer); // Cleanup timer on unmount
-  //   }
-  // }, [message, dispatch]);
-  
+    fetchNews(); 
+  }, []);
+
   return (
     <div>
       <h2>Dashboard</h2>
-      {/*
-        auth.message &&
-        <h5>{auth.message}</h5>
-      */}
+      {error && <p>{error}</p>} {/* Display error if any */}
+      
+      {articles.length > 0 ? (
+        <div className="container">
+          <div className="row">
+            {articles.map((element, index) => (
+              <div key={`${element.url}-${index}`} className="col-md-4 my-1">
+                <NewsItems 
+                  title={element.title || ""} 
+                  description={element.description ? element.description.slice(0, 88) : ""} 
+                  imageUrl={element.urlToImage || "https://blog.roboflow.com/content/images/size/w1200/2023/03/launch-new-api-cli.jpg"} 
+                  newsUrl={element.url} 
+                  author={element.author} 
+                  data={element.publishedAt} 
+                  source={element.source.name}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <p>Loading articles...</p>
+      )}
     </div>
   );
 };
