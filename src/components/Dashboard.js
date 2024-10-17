@@ -4,10 +4,12 @@ import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import NewsItems from './NewsItems';
 import Spinner from './Spinner';
+import LoadingBar from 'react-top-loading-bar'
 
-const Dashboard = ({ country = 'us', category = 'general', pageSize = 8, setProgress = () => {} }) => {
+const Dashboard = ({ country = 'us', category = 'general', pageSize = 8 }) => {
   const [articles, setArticles] = useState([]); // State to hold news data
   const [page, setPage] = useState(1); // Current page for pagination
+  const [progress, setProgress] = useState(0);
   const [totalResults, setTotalResults] = useState(0); // Total number of results
   const [error, setError] = useState(''); // State to hold any error messages
   const [isLoading, setisLoading] = useState(false);
@@ -21,6 +23,7 @@ const Dashboard = ({ country = 'us', category = 'general', pageSize = 8, setProg
       setTotalResults(response.data.totalResults); // Set the total number of articles
       setProgress(70);
       setisLoading(false);
+      setProgress(100);
     } catch (error) {
       setError('Failed to fetch news');
       setProgress(100);
@@ -40,9 +43,14 @@ const Dashboard = ({ country = 'us', category = 'general', pageSize = 8, setProg
     setPage(page + 1); // Increment page number
     fetchNews(page + 1); // Fetch new articles for the next page
   };
-
+  console.log(`********************8 ${progress}`)
   return (
     <div>
+      <LoadingBar
+        color='#f11946'
+        height={3}
+        progress={progress}
+      />
       <h1 className="text-center my-4">NewsMonkey - Top {capitalizeFirstLetter(category)} Headlines</h1>
       {error && <p>{error}</p>} {/* Display error if any */}
       {isLoading && <Spinner />}
@@ -50,7 +58,7 @@ const Dashboard = ({ country = 'us', category = 'general', pageSize = 8, setProg
           dataLength={articles.length} // This is the number of items loaded so far
           next={fetchMoreData} // Method to load more items
           hasMore={articles.length < totalResults} // Check if there are more articles to load
-          loader={<h4>Loading...</h4>} // Loader displayed while more items are being fetched
+          // loader={<h4>Loading...</h4>} // Loader displayed while more items are being fetched
           loader={articles.length < totalResults && <Spinner />}
         >
           <div className="container">
