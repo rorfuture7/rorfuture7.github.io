@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../features/auth/authSlice';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 // import FlashMessage2 from 'react-flash-message';
 
 const Login = () => {
@@ -10,7 +10,7 @@ const Login = () => {
   const auth = useSelector((state) => state.auth);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigate = useNavigate();
   // const handleChange = (e) => {
   //   setForm({ ...form, [e.target.name]: e.target.value });
   // };
@@ -43,7 +43,8 @@ const Login = () => {
           <input name="password" type="password" value={password} onChange={(text) => setPassword(text.target.value)} required />
         </div>
         {auth.error && <p style={{ color: 'red' }}>{auth.error}</p>}
-        <button type="submit" disabled={auth.loading}>
+        <h6>Don't have a account ? <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => navigate("/sign_up")}>Sign Up</span></h6>
+        <button type="submit" className="btn btn-primary" disabled={auth.loading}>
           {auth.loading ? 'Logging in...' : 'Login'}
         </button>
       </form>

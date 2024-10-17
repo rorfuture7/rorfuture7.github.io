@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signup } from '../features/auth/authSlice';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm_password, setConfirmPassword] = useState('');
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signup({user: { email, password, confirm_password }, new_app: "true"}));
@@ -40,7 +40,8 @@ const SignUp = () => {
           <input name="confirm_password" type="password" value={confirm_password} onChange={(text) => setConfirmPassword(text.target.value)} required />
         </div>
         {auth.error && <p style={{ color: 'red' }}>{auth.error}</p>}
-        <button type="submit" disabled={auth.loading}>
+        <h6>Already have an account ? <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => navigate("/login")}>Login</span></h6>
+        <button type="submit" className="btn btn-primary" disabled={auth.loading}>
           {auth.loading ? 'SignUp in...' : 'SignUp'}
         </button>
       </form>
