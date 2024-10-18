@@ -21,6 +21,7 @@ const Dashboard = ({ country = 'us', category = 'general', pageSize = 8 }) => {
       const response = await axios.get(`https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${NEWS_API_KEY}&page=${currentPage}&pageSize=${pageSize}`);
       setArticles((prevArticles) => [...prevArticles, ...response.data.articles]); // Append new articles to the existing ones
       setTotalResults(response.data.totalResults); // Set the total number of articles
+      setError('');
       setProgress(70);
       setisLoading(false);
       setProgress(100);

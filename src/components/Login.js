@@ -1,9 +1,11 @@
 // src/components/Login.js
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../features/auth/authSlice';
+import { login, google_auth } from '../features/auth/authSlice';
 import { Navigate, useNavigate } from 'react-router-dom';
 // import FlashMessage2 from 'react-flash-message';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -19,6 +21,17 @@ const Login = () => {
     e.preventDefault();
     dispatch(login({user: { email, password }}));
   };
+
+  const handleSuccess = (credentialResponse) =>{
+    console.log("Google Sign In Success", credentialResponse)
+    const token = credentialResponse.credential;
+    const decoded = jwtDecode(token);
+    dispatch(google_auth({data: { access_token: token}}));
+
+  }
+  const handleError = () =>{
+    console.log('Login Failed');
+  }
 
   if (auth.token) {
     return <Navigate to="/dashboard" />;
@@ -44,9 +57,15 @@ const Login = () => {
         </div>
         {auth.error && <p style={{ color: 'red' }}>{auth.error}</p>}
         <h6>Don't have a account ? <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => navigate("/sign_up")}>Sign Up</span></h6>
-        <button type="submit" className="btn btn-primary" disabled={auth.loading}>
-          {auth.loading ? 'Logging in...' : 'Login'}
+        <button type="submit" className="btn btn-primary">
+          Login
         </button>
+        <GoogleOAuthProvider clientId="173957723954-svtaetqk1f2ieeq4d4p3vvobk1cmklrd.apps.googleusercontent.com">
+          <GoogleLogin
+            onSuccess={handleSuccess}
+            onError={handleError}
+          />
+        </GoogleOAuthProvider>
       </form>
     </div>
   );

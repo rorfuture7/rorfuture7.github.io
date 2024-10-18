@@ -198,4 +198,46 @@ export default FlashMessage;
 
 
 --------------------------------------------------
+
+Login with google
+
+npm i @react-oauth/google
+npm i jwt-decode
+.......................
+
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
+
+-------
+
+### credentialResponse me jwt token ka token milega, ise decode karne ke liye
+
+1. npm i jwt-decode
+
+import { jwtDecode } from "jwt-decode";
+
+const token = "eyJ0eXAiO.../// jwt token";
+const decoded = jwtDecode(token);
+
+-------------------------------------------
+const handleSuccess = (credentialResponse) =>{
+  const token = "eyJ0eXAiO.../// jwt token";
+  const decoded = jwtDecode(token);
+  console.log("Google Sign In Success", credentialResponse)
+
+}
+const handleError = () =>{
+  console.log('Login Failed');
+}
+-------
+
+<GoogleOAuthProvider clientId="173957723954-svtaetqk1f2ieeq4d4p3vvobk1cmklrd.apps.googleusercontent.com">
+  <GoogleLogin
+    onSuccess={handleSuccess}
+    onError={handleError}
+  />
+</GoogleOAuthProvider>
+
+
+--------------------------------------------------
 Backend remote url: https://github.com/rinkukushwah5679/assignmant-api.git
