@@ -21,7 +21,7 @@ export default function Navbar({title, sec}) {
     dispatch(logout()).then(() => {
       setTimeout(() => {
         dispatch(clearState());
-      }, 2000);
+      }, 1000);
     });
   };
 
@@ -93,13 +93,19 @@ export default function Navbar({title, sec}) {
 	            </>
             	) : (
             		<li className="nav-item">
-	            		<a
+	            		{/*<a
 								    href="#"
 								    className="nav-link"
 								    onClick={handleLogout}
 								  >
 								  	Logout
-	  							</a>
+	  							</a>*/}
+	  							<button
+	  								className="nav-link"
+								    onClick={handleLogout}
+	  							>
+	  								Logout
+	  							</button>
 	  						</li>
             	)}
           </ul>

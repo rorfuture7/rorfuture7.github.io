@@ -5,7 +5,7 @@ import { login, google_auth } from '../features/auth/authSlice';
 import { Navigate, useNavigate } from 'react-router-dom';
 // import FlashMessage2 from 'react-flash-message';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const Login = () => {
   const handleSuccess = (credentialResponse) =>{
     console.log("Google Sign In Success", credentialResponse)
     const token = credentialResponse.credential;
-    const decoded = jwtDecode(token);
+    // const decoded = jwtDecode(token);
     dispatch(google_auth({data: { access_token: token}}));
 
   }

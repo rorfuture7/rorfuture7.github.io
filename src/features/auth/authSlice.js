@@ -30,7 +30,7 @@ export const google_auth = createAsyncThunk('auth/google_auth', async (credentia
 // Login Thunk
 export const login = createAsyncThunk('auth/login', async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post(`http://localhost:3001/users/login`, credentials);
+      const response = await axios.post(`${BASE_URL}/users/login`, credentials);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
